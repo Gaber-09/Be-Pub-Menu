@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: #000000; /* Nero assoluto stile display OLED di Apple */
+            background-color: #000000; /* Nero assoluto OLED */
             color: #ffffff;
             overflow-x: hidden;
         }
@@ -64,7 +64,7 @@
 
         /* --- CONTENITORE MENU --- */
         main {
-            max-width: 750px; /* Dimensione ottimale verticale per visualizzazione menu */
+            max-width: 750px;
             margin: 0 auto;
             padding: 120px 16px 80px 16px;
         }
@@ -90,11 +90,11 @@
             font-weight: 400;
         }
 
-        /* --- GALLERIA VERTICALE FLUIDA --- */
+        /* --- GALLERIA VERTICALE --- */
         .menu-gallery {
             display: flex;
             flex-direction: column;
-            gap: 32px; /* Spaziatura elegante stile Apple Card */
+            gap: 32px;
         }
 
         .menu-page-container {
@@ -106,20 +106,18 @@
             width: 100%;
             height: auto;
             display: block;
-            border-radius: 24px; /* Angoli stondati precisi per richiamare i display iOS */
+            border-radius: 24px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            background-color: #1c1c1e; /* Sfondo di caricamento grigio scuro */
+            background-color: #1c1c1e;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Effetto hover discreto su dispositivi desktop */
         @media (hover: hover) {
             .menu-image:hover {
                 transform: scale(1.015);
             }
         }
 
-        /* Ottimizzazione Mobile */
         @media (max-width: 768px) {
             .menu-header h1 {
                 font-size: 36px;
@@ -153,7 +151,7 @@
         </div>
 
         <div class="menu-gallery">
-
+            
             <div class="menu-page-container"><img src="environments/menu/1.png" alt="Pagina 1" class="menu-image"></div>
             <div class="menu-page-container"><img src="environments/menu/2.png" alt="Pagina 2" class="menu-image"></div>
             <div class="menu-page-container"><img src="environments/menu/3.png" alt="Pagina 3" class="menu-image"></div>
