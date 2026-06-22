@@ -1,227 +1,177 @@
-<!doctype html>
+ <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[A.I.R.] - Progetti</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Space+Grotesk:wght@400;500;700&display=swap");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu — Be Pub</title>
+    <style>
+        /* --- RESET & VARIABILI APPLE STYLE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    :root {
-      --bg-a: #030303;
-      --bg-b: #0d1016;
-      --bg-c: #121212;
-      --text: #f5f5f5;
-      --muted: #b9bec8;
-      --glass: rgba(255, 255, 255, 0.06);
-      --stroke: rgba(255, 255, 255, 0.18);
-      --accent-1: #44d2ff;
-      --accent-2: #00ffa3;
-      --shadow: rgba(0, 0, 0, 0.5);
-    }
+        body {
+            background-color: #000000; /* Nero assoluto stile display OLED di Apple */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        /* --- NAVBAR BLURREDIZZATA --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
-    body {
-      min-height: 100vh;
-      font-family: "Space Grotesk", sans-serif;
-      color: var(--text);
-      cursor: url("cursore.png") 16 16, auto;
-      background:
-        radial-gradient(circle at 10% 15%, rgba(68, 210, 255, 0.12), transparent 35%),
-        radial-gradient(circle at 85% 80%, rgba(0, 255, 163, 0.1), transparent 30%),
-        linear-gradient(145deg, var(--bg-a), var(--bg-b) 55%, var(--bg-c));
-      display: grid;
-      place-items: center;
-      padding: 40px 20px;
-    }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
 
-    .menu-card,
-    .menu-card *,
-    a,
-    button {
-      cursor: url("cursore.png") 16 16, pointer;
-    }
+        .nav-logo {
+            font-weight: 600;
+            font-size: 19px;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: #f5f5f7;
+        }
 
-    .page {
-      width: min(1100px, 100%);
-    }
+        .nav-links a {
+            color: #86868b;
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
 
-    .title {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: 0.09em;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+        }
 
-    .subtitle {
-      color: var(--muted);
-      margin-bottom: 26px;
-      font-size: 0.98rem;
-    }
+        /* --- CONTENITORE MENU --- */
+        main {
+            max-width: 750px; /* Dimensione ottimale verticale per visualizzazione menu */
+            margin: 0 auto;
+            padding: 120px 16px 80px 16px;
+        }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(240px, 1fr));
-      gap: 22px;
-      perspective: 1200px;
-    }
+        .menu-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
 
-    .menu-card {
-      background: linear-gradient(165deg, rgba(255, 255, 255, 0.09), var(--glass));
-      border: 1px solid var(--stroke);
-      border-radius: 20px;
-      padding: 14px;
-      box-shadow: 0 20px 40px -20px var(--shadow);
-      transform-style: preserve-3d;
-      transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
+        .menu-header h1 {
+            font-size: 44px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .card-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      border-radius: 20px;
-      text-indent: -9999px;
-      overflow: hidden;
-    }
+        .menu-header p {
+            color: #86868b;
+            font-size: 17px;
+            font-weight: 400;
+        }
 
-    .menu-card::before {
-      content: "";
-      position: absolute;
-      inset: -120% 25%;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
-      transform: rotate(20deg);
-      transition: transform 450ms ease;
-      z-index: 0;
-      pointer-events: none;
-    }
+        /* --- GALLERIA VERTICALE FLUIDA --- */
+        .menu-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 32px; /* Spaziatura elegante stile Apple Card */
+        }
 
-    .menu-card:hover {
-      transform: rotateX(7deg) rotateY(-8deg) translateY(-6px) scale(1.015);
-      box-shadow: 0 28px 45px -22px rgba(0, 0, 0, 0.72);
-      border-color: rgba(68, 210, 255, 0.5);
-    }
+        .menu-page-container {
+            width: 100%;
+            position: relative;
+        }
 
-    .menu-card:hover::before {
-      transform: translateX(130%) rotate(20deg);
-    }
+        .menu-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 24px; /* Angoli stondati precisi per richiamare i display iOS */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            background-color: #1c1c1e; /* Sfondo di caricamento grigio scuro */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-    .menu-content {
-      position: relative;
-      z-index: 1;
-      transform: translateZ(30px);
-    }
+        /* Effetto hover discreto su dispositivi desktop */
+        @media (hover: hover) {
+            .menu-image:hover {
+                transform: scale(1.015);
+            }
+        }
 
-    .tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 6px 9px;
-      border-radius: 999px;
-      margin-bottom: 11px;
-      background: rgba(68, 210, 255, 0.13);
-      border: 1px solid rgba(68, 210, 255, 0.4);
-      color: #ccefff;
-    }
-
-    .menu-title {
-      font-family: "Orbitron", sans-serif;
-      font-size: 1.2rem;
-      margin-bottom: 7px;
-    }
-
-    .menu-text {
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 0.95rem;
-      margin-bottom: 12px;
-      min-height: 78px;
-    }
-
-    .menu-image {
-      width: 100%;
-      height: 175px;
-      object-fit: cover;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      display: block;
-    }
-
-    .menu-card.poster-card .menu-image {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 7;
-      object-fit: contain;
-      object-position: center;
-      background: rgba(0, 0, 0, 0.45);
-      border-radius: 18px;
-      padding: 8px;
-    }
-
-    @media (max-width: 980px) {
-      .menu-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .menu-card:hover {
-        transform: translateY(-4px) scale(1.01);
-      }
-    }
-  </style>
+        /* Ottimizzazione Mobile */
+        @media (max-width: 768px) {
+            .menu-header h1 {
+                font-size: 36px;
+            }
+            .menu-gallery {
+                gap: 20px;
+            }
+            .menu-image {
+                border-radius: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main class="page">
-    <h1 class="title"><strong>[A.I.R.]</strong></h1>
-    <p class="subtitle">progetti scolastici di automazione, robotica e informatica.</p>
 
-    <section class="menu-grid">
-      <article class="menu-card poster-card">
-        <div class="menu-content">
-          <span class="tag">Progetto 01</span>
-          <h2 class="menu-title">Mimica - Mano Robotica</h2>
-          <p class="menu-text">
-            Mano robotica con diverse funzioni di dimostrazione, come riproduzione della mano,
-              controllo manuale e demo mode. Clicca sulla copertina per aprire la pagina completa.
-          </p>
-          <img class="menu-image" src="mimica.PNG" alt="Locandina progetto Mimica">
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Be Pub</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#" class="active">Menu</a>
+                <a href="#">Contatti</a>
+            </div>
         </div>
-        <a class="card-overlay" href="mimica.html">Apri progetto Mimica</a>
-      </article>
+    </nav>
 
-      <article class="menu-card poster-card">
-        <div class="menu-content">
-          <span class="tag">Progetto 02</span>
-          <h2 class="menu-title">Water Life</h2>
-          <p class="menu-text">
-            Water Life. progetto al 90% costituito da materiali riciclati,
-              coltivazione completamente automatica di piante senza necessità di terreno.
-          </p>
-          <img class="menu-image" src="water-life.PNG" alt="Locandina progetto Water Life">
+    <main>
+        <div class="menu-header">
+            <h1>Il Menu.</h1>
+            <p>Selezionato, artigianale, Be Pub.</p>
         </div>
-      </article>
 
-      <article class="menu-card poster-card">
-        <div class="menu-content">
-          <span class="tag">Progetto 03</span>
-          <h2 class="menu-title">Ulisse</h2>
-          <p class="menu-text">
-            un braccio robotico in grado di riconoscere e differenziare i rifiuti
-          </p>
-          <img class="menu-image" src="ulisse.png" alt="Locandina progetto Ulisse">
+        <div class="menu-gallery">
+
+            <div class="menu-page-container"><img src="environments/menu/1.png" alt="Pagina 1" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/2.png" alt="Pagina 2" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/3.png" alt="Pagina 3" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/4.png" alt="Pagina 4" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/5.png" alt="Pagina 5" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/6.png" alt="Pagina 6" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/7.png" alt="Pagina 7" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/8.png" alt="Pagina 8" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/9.png" alt="Pagina 9" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/10.png" alt="Pagina 10" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/11.png" alt="Pagina 11" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/12.png" alt="Pagina 12" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/13.png" alt="Pagina 13" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/14.png" alt="Pagina 14" class="menu-image"></div>
+            <div class="menu-page-container"><img src="environments/menu/15.png" alt="Pagina 15" class="menu-image"></div>
+
         </div>
-      </article>
-    </section>
-  </main>
+    </main>
+
 </body>
 </html>
