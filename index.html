@@ -79,6 +79,56 @@
             padding: 140px 16px 80px 16px; /* Aumentato il padding top per la navbar più alta */
         }
 
+        /* --- SELETTORE ANIMATO IN STILE APPLE --- */
+        .menu-tab-selector {
+            position: relative;
+            display: flex;
+            width: 240px;
+            margin: 0 auto 30px auto; /* Centrato, sopra il titolo */
+            background-color: rgba(116, 116, 128, 0.18); /* Grigio opaco Apple */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2px;
+            border-radius: 9px; /* Arrotondamento classico dei segmenti iOS */
+        }
+
+        .tab-btn {
+            position: relative;
+            flex: 1;
+            background: none;
+            border: none;
+            color: #86868b;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 0;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+        }
+
+        /* Lo sfondo bianco che si sposta in modo fluido */
+        .selector-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: calc(50% - 2px);
+            background-color: rgba(255, 255, 255, 0.22); /* Effetto vetro chiaro riflettente */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            border-radius: 7px;
+            z-index: 1;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Stato spostato a destra per le bevande */
+        .menu-tab-selector.drinks-active .selector-slider {
+            transform: translateX(100%);
+        }
+
         .menu-header {
             text-align: center;
             margin-bottom: 70px;
@@ -105,6 +155,20 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Stato nascosto temporaneo per il cambio categoria */
+        .menu-gallery.hidden {
+            display: none;
+        }
+
+        /* Segnaposto vuoto per la sezione bevande */
+        .drinks-placeholder {
+            text-align: center;
+            padding: 100px 20px;
+            color: #86868b;
+            font-size: 16px;
         }
 
         .menu-page-container {
@@ -157,13 +221,18 @@
     </nav>
 
     <main>
-        <div class="menu-header">
-            <h1>Il Menu.</h1>
-            <p>Selezionato, artigianale, Be Pub.</p>
+        <div class="menu-tab-selector" id="tabSelector">
+            <div class="selector-slider"></div>
+            <button class="tab-btn active" onclick="switchMenu('food')">Cibo</button>
+            <button class="tab-btn" onclick="switchMenu('drinks')">Bevande</button>
         </div>
 
-        <div class="menu-gallery">
-            
+        <div class="menu-header">
+            <h1 id="menuTitle">Il Menu.</h1>
+            <p id="menuSubtitle">Selezionato, artigianale, Be Pub.</p>
+        </div>
+
+        <div class="menu-gallery" id="foodGallery">
             <div class="menu-page-container"><img src="1.png" alt="Pagina 1" class="menu-image"></div>
             <div class="menu-page-container"><img src="2.png" alt="Pagina 2" class="menu-image"></div>
             <div class="menu-page-container"><img src="3.png" alt="Pagina 3" class="menu-image"></div>
@@ -185,11 +254,45 @@
             <div class="menu-page-container"><img src="19.png" alt="Pagina 19" class="menu-image"></div>
             <div class="menu-page-container"><img src="20.png" alt="Pagina 20" class="menu-image"></div>
             <div class="menu-page-container"><img src="21.png" alt="Pagina 21" class="menu-image"></div>
-
-
-
         </div>
+
+        <div class="menu-gallery hidden" id="drinksGallery">
+            <div class="drinks-placeholder">
+                <p>Le nostre bevande saranno disponibili a breve.</p>
+            </div>
+            </div>
     </main>
+
+    <script>
+        function switchMenu(type) {
+            const selector = document.getElementById('tabSelector');
+            const foodGallery = document.getElementById('foodGallery');
+            const drinksGallery = document.getElementById('drinksGallery');
+            const buttons = selector.getElementsByClassName('tab-btn');
+            const title = document.getElementById('menuTitle');
+            const subtitle = document.getElementById('menuSubtitle');
+
+            if (type === 'food') {
+                selector.classList.remove('drinks-active');
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+                foodGallery.classList.remove('hidden');
+                drinksGallery.classList.add('hidden');
+                title.innerText = "Il Menu.";
+                subtitle.innerText = "Selezionato, artigianale, Be Pub.";
+            } else {
+                selector.classList.add('drinks-active');
+                buttons[1].classList.add('active');
+                buttons[0].classList.remove('active');
+                foodGallery.classList.add('hidden');
+                drinksGallery.classList.remove('hidden');
+                title.innerText = "Draft & Bottles.";
+                subtitle.innerText = "Birre artigianali, distillati e miscelati.";
+            }
+            // Torna su in cima alla pagina fluidamente al cambio di sezione
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
