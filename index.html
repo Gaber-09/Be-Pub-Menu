@@ -15,9 +15,15 @@
         }
 
         body {
-            background-color: #000000; /* Nero assoluto OLED */
+            background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
+            /* Immagine di sfondo reale a tutto schermo */
+            background-image: url('sfondo.jpg'); /* Sostituisci con il nome reale del tuo sfondo (es. sfondo.jpg o .png) */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
 
         /* --- NAVBAR BLURREDIZZATA --- */
@@ -25,7 +31,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
@@ -35,14 +41,13 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            height: 64px; /* Aumentata per ospitare il logo più grande con eleganza */
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
         }
 
-        /* Stile per l'area del logo */
         .nav-logo-link {
             display: flex;
             align-items: center;
@@ -55,7 +60,7 @@
         }
 
         .nav-logo-img {
-            height: 38px; /* Logo ingrandito per dare maggiore identità visiva */
+            height: 38px;
             width: auto;
             display: block;
         }
@@ -72,24 +77,37 @@
             color: #ffffff;
         }
 
-        /* --- CONTENITORE MENU --- */
+        /* --- CONTENITORE MENU CON EFFETTO SFOCATURA E OSCURAMENTO GRADUALE --- */
         main {
             max-width: 750px;
             margin: 0 auto;
-            padding: 140px 16px 80px 16px; /* Aumentato il padding top per la navbar più alta */
+            padding: 140px 16px 80px 16px;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* --- SELETTORE ANIMATO IN STILE APPLE --- */
+        /* Zona intestazione protetta da gradiente scuro e sfocatura per leggere bene i testi */
+        .header-wrapper {
+            position: relative;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 24px;
+            border-radius: 4px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* --- SELETTORE SQUADRATO (STILE APPLE MINIMAL) --- */
         .menu-tab-selector {
             position: relative;
             display: flex;
             width: 240px;
-            margin: 0 auto 30px auto; /* Centrato, sopra il titolo */
-            background-color: rgba(116, 116, 128, 0.18); /* Grigio opaco Apple */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            margin: 0 auto 30px auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Sfondo opaco leggero */
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 2px;
-            border-radius: 9px; /* Arrotondamento classico dei segmenti iOS */
+            border-radius: 2px; /* Selettore completamente squadrato (o quasi) */
         }
 
         .tab-btn {
@@ -97,41 +115,36 @@
             flex: 1;
             background: none;
             border: none;
-            color: #86868b;
+            color: #a1a1a6;
             font-size: 13px;
-            font-weight: 500;
-            padding: 6px 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 8px 0;
             cursor: pointer;
             z-index: 2;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
         }
 
         .tab-btn.active {
-            color: #ffffff;
+            color: #000000; /* Testo nero sul blocco attivo bianco per massimo contrasto */
         }
 
-        /* Lo sfondo bianco che si sposta in modo fluido */
+        /* Slider animato squadrato */
         .selector-slider {
             position: absolute;
             top: 2px;
             left: 2px;
             bottom: 2px;
             width: calc(50% - 2px);
-            background-color: rgba(255, 255, 255, 0.22); /* Effetto vetro chiaro riflettente */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-            border-radius: 7px;
+            background-color: #ffffff; /* Sfondo bianco solido e pulito */
+            border-radius: 1px;
             z-index: 1;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Stato spostato a destra per le bevande */
         .menu-tab-selector.drinks-active .selector-slider {
             transform: translateX(100%);
-        }
-
-        .menu-header {
-            text-align: center;
-            margin-bottom: 70px;
         }
 
         .menu-header h1 {
@@ -139,13 +152,13 @@
             font-weight: 700;
             letter-spacing: -1.5px;
             margin-bottom: 12px;
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #d2d2d7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .menu-header p {
-            color: #86868b;
+            color: #e8e8ed;
             font-size: 17px;
             font-weight: 400;
         }
@@ -155,20 +168,13 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
-            transition: opacity 0.4s ease;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
 
-        /* Stato nascosto temporaneo per il cambio categoria */
         .menu-gallery.hidden {
             display: none;
-        }
-
-        /* Segnaposto vuoto per la sezione bevande */
-        .drinks-placeholder {
-            text-align: center;
-            padding: 100px 20px;
-            color: #86868b;
-            font-size: 16px;
+            opacity: 0;
         }
 
         .menu-page-container {
@@ -181,8 +187,8 @@
             height: auto;
             display: block;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            background-color: #1c1c1e;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            background-color: rgba(28, 28, 30, 0.7);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -201,6 +207,9 @@
             }
             .menu-image {
                 border-radius: 18px;
+            }
+            .header-wrapper {
+                padding: 16px;
             }
         }
     </style>
@@ -221,15 +230,17 @@
     </nav>
 
     <main>
-        <div class="menu-tab-selector" id="tabSelector">
-            <div class="selector-slider"></div>
-            <button class="tab-btn active" onclick="switchMenu('food')">Cibo</button>
-            <button class="tab-btn" onclick="switchMenu('drinks')">Bevande</button>
-        </div>
+        <div class="header-wrapper">
+            <div class="menu-tab-selector" id="tabSelector">
+                <div class="selector-slider"></div>
+                <button class="tab-btn active" onclick="switchMenu('food')">Cibo</button>
+                <button class="tab-btn" onclick="switchMenu('drinks')">Bevande</button>
+            </div>
 
-        <div class="menu-header">
-            <h1 id="menuTitle">Il Menu.</h1>
-            <p id="menuSubtitle">Selezionato, artigianale, Be Pub.</p>
+            <div class="menu-header">
+                <h1 id="menuTitle">Il Menu.</h1>
+                <p id="menuSubtitle">Selezionato, artigianale, Be Pub.</p>
+            </div>
         </div>
 
         <div class="menu-gallery" id="foodGallery">
@@ -257,10 +268,14 @@
         </div>
 
         <div class="menu-gallery hidden" id="drinksGallery">
-            <div class="drinks-placeholder">
-                <p>Le nostre bevande saranno disponibili a breve.</p>
-            </div>
-            </div>
+            <div class="menu-page-container"><img src="p1.png" alt="Bevande 1" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p2.png" alt="Bevande 2" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p3.png" alt="Bevande 3" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p4.png" alt="Bevande 4" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p5.png" alt="Bevande 5" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p6.png" alt="Bevande 6" class="menu-image"></div>
+            <div class="menu-page-container"><img src="p7.png" alt="Bevande 7" class="menu-image"></div>
+        </div>
     </main>
 
     <script>
@@ -289,7 +304,6 @@
                 title.innerText = "Draft & Bottles.";
                 subtitle.innerText = "Birre artigianali, distillati e miscelati.";
             }
-            // Torna su in cima alla pagina fluidamente al cambio di sezione
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
